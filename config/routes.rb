@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :users
-  root 'pages#home'
+  devise_for :users,
+    controllers: { registrations: 'registrations' }
+  root 'pages#index'
   get '/users/:id', to: 'users#show', as: 'user'
+
+  resources :posts, only: %i(new create index) do
+    resources :photos, only: %i(create)
+  end
 end
